@@ -7,39 +7,50 @@
   <title>Document</title>
   <style>
     #gifContainer img {
-      width: 25%;
+      width: 20%;
+    }
+    #mainContent {
+      width: 50%;
     }
   </style>
 </head>
 
 <body>
-  <div id="gifContainer"></div>
-  <div id="mainContent"></div>
+  <table>
+    <tr>
+      <td id="mainContent"></td>
+      <td id="gifContainer"></td>
+    </tr>
+  </table>
 
   <script>
 
     let myRequest = new XMLHttpRequest();
-
     const GIPHY_API_KEY = 'WOVQUcSFOnSD2qeS3UyiqkiaBiJlUhLX';
-    const category = 'joey';
+    const category = "joey";
+    const numberOfGifs = 16;
+    const startingGif = 5;
 
-    myRequest.onreadystatechange = function (event) {
+    function createMainImg(element) {
+      mainContent.innerHTML = '';
+      let mainImage = document.createElement('img');
+      mainImage.setAttribute('src', element.getAttribute('alt'));
+      mainContent.appendChild(mainImage);
+    }
 
-      if (myRequest.status === 200) {
-        let parsedGifs = JSON.parse(myRequest.response)
-        console.log(parsedGifs);
-
-        for (let i = 0; i < 16; i++) {
-          let image = document.createElement('img');
-          image.setAttribute('src', parsedGifs.data[i].images.original.url);
-          gifContainer.appendChild(image);
-        }
+    function intoDiv() {
+      let parsedGifs = JSON.parse(myRequest.response);
+      console.log(parsedGifs);
+      for (let i = startingGif; i < numberOfGifs + startingGif; i++) {
+        let image = document.createElement('img');
+        image.setAttribute('src', parsedGifs.data[i].images.fixed_height_small_still.url);
+        image.setAttribute('alt', parsedGifs.data[i].images.original.url)
+        image.setAttribute('onclick', 'createMainImg(this)');
+        gifContainer.appendChild(image);
       }
     };
 
-    myRequest.onload = () => {
-      console.log("onload", myRequest.status);
-    };
+    myRequest.addEventListener("load", intoDiv);
 
     myRequest.open('GET', 'http://api.giphy.com/v1/gifs/search?api_key=' + GIPHY_API_KEY + '&q=' + category);
     myRequest.setRequestHeader('Accept', 'application/json');
