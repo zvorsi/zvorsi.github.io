@@ -41,7 +41,7 @@
     function intoDiv() {
       let parsedGifs = JSON.parse(myRequest.response);
       console.log(parsedGifs);
-      for (let i = startingGif; i < numberOfGifs + startingGif; i++) {
+      for (let i = startingGif; i < numberOfGifs + startingGif - 1; i++) {
         let image = document.createElement('img');
         image.setAttribute('src', parsedGifs.data[i].images.fixed_height_small_still.url);
         image.setAttribute('alt', parsedGifs.data[i].images.original.url)
