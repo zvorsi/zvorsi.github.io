@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Workshop: EventListeners</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            text-align: center;
+        }
+
+        button {
+            margin: 16px;
+        }
+
+        .img-inspector {
+            margin: 0 auto;
+            width: 500px;
+            height: 320px;
+            border: 1px solid #3a3a3a;
+            background-image: url("../assets/mp.jpg");
+            background-size: 200%;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <button data-action="move" data-direction="up">Up</button>
+        <button data-action="move" data-direction="down">Down</button>
+        <button data-action="move" data-direction="left">Left</button>
+        <button data-action="move" data-direction="right">Right</button>
+        <button data-action="zoom" data-direction="in">Zoom in</button>
+        <button data-action="zoom" data-direction="out">Zoom out</button>
+    </nav>
+    <div class="img-inspector">
+    </div>
+
+   
+    <script>
+    //   Here is an image inspector, but the buttons 
+    //   are not implemented yet, that will be your task!
+    //    - the nav buttons (up, down, left, right) 
+    //         move the background by 10px
+    //    - the zoom buttons increase/decrease the image by 20%
+    //    - attach only two event listeners to the nav element
+    //      - one for navigation
+    //      - one for zooming
+
+    const nav = document.querySelector('nav');
+    const imgInsp = document.querySelector('.img-inspector');
+
+    // imgInsp.addEventListener('mousemove', (e) => {
+    //     imgInsp.style.backgroundPositionX =  -e.offsetX + 'px';
+    //     imgInsp.style.backgroundPositionY =  -e.offsetY + 'px';
+    // }); ez az egérrel mozgatja
+    
+    let posX = 0;
+    let posY = 0;
+    let zoom = 1000;
+
+    nav.addEventListener('click', (e) => {
+        if(event.target.innerText === 'Up'){
+            imgInsp.style.backgroundPositionY = posY - 10 + "px";
+            posY = posY - 10;
+        }else if (event.target.innerText === 'Down'){
+            imgInsp.style.backgroundPositionY = posY + 10 + "px";
+            posY = posY + 10;
+        }else if (event.target.innerText === 'Left'){
+            imgInsp.style.backgroundPositionX = posX - 10 + "px";
+            posX = posX - 10;
+        }else if (event.target.innerText === 'Right'){
+            imgInsp.style.backgroundPositionX = posX + 10 + "px";
+            posX = posX + 10;
+        }else if (event.target.innerText === 'Zoom in'){
+            imgInsp.style.backgroundSize = zoom + 20 + "px";
+            zoom = zoom + 20;
+        }else if (event.target.innerText === 'Zoom out'){
+            imgInsp.style.backgroundSize = zoom - 20 + "px";
+            zoom = zoom - 20;
+        }
+    });
+
+
+
+
+
+</script>
+
+</body>
+
+</html>
